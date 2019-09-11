@@ -1,0 +1,46 @@
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7,100px);
+  grid-template-rows: repeat(6,100px);
+  grid-gap: 1px;
+}
+
+@mixin day-box {
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+  background-color: #eeeeee;
+  font-family: Arial,sans-serif;
+  font-size: 30px;
+  text-align: center;
+  line-height: 100px;
+  transition: transform 0.5s, background-color 0.5s;
+}
+
+$week: (mon,tue,wed,thu,fri,sat,sun);
+
+@for  $i from 28 through 31 {
+  @for $j from 1 through $i {
+    .calendar-#{$i}>div:nth-child(#{$j})::before {
+      content: "#{$j}";
+    }
+
+    .calendar-#{$i}>div:nth-child(#{$j}) {
+      @include day-box;
+    }
+    .calendar-#{$i}>div:hover {
+      background-color: #ffc0cb;
+      transform: translate(0,-20px);
+      cursor: pointer;
+    }
+  }
+}
+
+@for $i from 1 through 7 {
+  .calendar-#{nth($week,$i)} {
+    div:nth-child(1) {
+      grid-column-start: $i;
+    }
+  }
+}
